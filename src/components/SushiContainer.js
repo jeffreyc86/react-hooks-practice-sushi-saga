@@ -1,11 +1,26 @@
 import React from "react";
 import MoreButton from "./MoreButton";
+import Sushi from './Sushi'
 
-function SushiContainer(props) {
+function SushiContainer({sushis, increasePage, deductFromBill, budget}) {
+
+  function deductAmount(sushi){
+    deductFromBill(parseInt(sushi.price))
+  }
+
+
+  const sushiPlates = sushis.map(sushi => {
+    return <Sushi key={sushi.id} sushi={sushi} deductAmount={deductAmount} budget={budget}/>
+  })
+
+  function changePage(){
+    increasePage()
+  }
+
   return (
     <div className="belt">
-      {/* Render Sushi components here! */}
-      <MoreButton />
+      {sushiPlates}
+      <MoreButton changePage={changePage}/>
     </div>
   );
 }
